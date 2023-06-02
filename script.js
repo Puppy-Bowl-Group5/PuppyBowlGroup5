@@ -1,3 +1,5 @@
+const PuppyFreeAgents = require("./scriptES6.js")
+
 const playerContainer = document.getElementById('all-players-container');
 const newPlayerFormContainer = document.getElementById('new-player-form');
 
