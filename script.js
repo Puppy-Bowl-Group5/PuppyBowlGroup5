@@ -1,4 +1,5 @@
-const PuppyFreeAgents = require("./scriptES6.js")
+import {PuppyFreeAgents} from './scriptES6'
+//const PuppyFreeAgents = require("./scriptES6.js")
 
 const playerContainer = document.getElementById('all-players-container');
 const newPlayerFormContainer = document.getElementById('new-player-form');
@@ -13,9 +14,12 @@ const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/2302-ACC-PT-WEB-PT-D/pl
  */
 const fetchAllPlayers = async () => {
     try {
-
-    } catch (err) {
-        console.error('Uh oh, trouble fetching players!', err);
+        const response = await fetch(APIURL);
+        const players = await response.json();
+        console.log(players)
+        return players;
+    } catch (error) {
+        console.error('Uh oh, trouble fetching players!', error);
     }
 };
 
