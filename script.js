@@ -1,4 +1,4 @@
-import {PuppyFreeAgents} from './scriptES6'
+//import {PuppyFreeAgents} from './scriptES6'
 //const PuppyFreeAgents = require("./scriptES6.js")
 
 const playerContainer = document.getElementById('all-players-container');
@@ -6,7 +6,7 @@ const newPlayerFormContainer = document.getElementById('new-player-form');
 
 const cohortName = '2302-ACC-PT-WEB-PT-D';
 // Use the APIURL variable for fetch requests
-const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/2302-ACC-PT-WEB-PT-D/players`;
+const APIURL = 'https://fsa-puppy-bowl.herokuapp.com/api/2302-ACC-PT-WEB-PT-D/players';
 
 /**
  * It fetches all players from the API and returns them
@@ -15,19 +15,23 @@ const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/2302-ACC-PT-WEB-PT-D/pl
 const fetchAllPlayers = async () => {
     try {
         const response = await fetch(APIURL);
-        const players = await response.json();
+        const data = await response.json();
+        const players = data.data.players;
         console.log(players)
         return players;
     } catch (error) {
         console.error('Uh oh, trouble fetching players!', error);
+        throw error;
     }
 };
 
 const fetchSinglePlayer = async (playerId) => {
     try {
-
-    } catch (err) {
-        console.error(`Oh no, trouble fetching player #${playerId}!`, err);
+        const response = await fetch(`${APIURL}/${playerId}`);
+        const player = await response.json();
+        return player;
+    } catch (error) {
+        console.error(`Oh no, trouble fetching player #${playerId}!`, error);
     }
 };
 
@@ -49,7 +53,17 @@ const removePlayer = async (playerId) => {
         );
     }
 };
-
+//const RenderPlayerById = async (id) => {
+  //  console.log(`render single party: ${id}`);
+   //try {
+     //   const player = await fetchSinglePlayer(id);
+       // console.log('player Details: ', player);
+        //if (!id || id.length === 0) {
+          //  playerContainer.innerHTML = "<h3> No players found!</h3>";
+           // return;
+        //}
+    //}
+//}
 /**
  * It takes an array of player objects, loops through them, and creates a string of HTML for each
  * player, then adds that string to a larger string of HTML that represents all the players. 
@@ -70,11 +84,40 @@ const removePlayer = async (playerId) => {
  * @param playerList - an array of player objects
  * @returns the playerContainerHTML variable.
  */
-const renderAllPlayers = (playerList) => {
+const renderAllPlayers = async (players) => {
     try {
-        
-    } catch (err) {
-        console.error('Uh oh, trouble rendering players!', err);
+        playerContainer.innerHTML = '';
+        players.forEach((player) => {
+            const playerElement = document.createElement('div');
+            playerElement.classList.add('player');
+            playerElement.innerHTML = `
+            <h2>${player.name}</h2>
+            <p>${player.breed}</p>
+            <p>${player.status}</p>
+            <p>${player.teamId}</p>
+            <button class="details-button" data-id="${player.id}">See Details</button>
+            <button class="Add-button" data-id="${player.id}">Add Player</button>
+            <button class="Remove-button" data-id${player.id}">Remove From Roster</button>
+            `;
+            playerContainer.appendChild(playerElement);
+
+            // details button
+            const detailsButton = playerElement.querySelector('.details-button');
+            detailsButton.addEventListener('click', async (event) =>{
+                let playerId = event.currentTarget.dataset.id;
+                await RenderPlayerById(playerId)
+            });
+            //remove button 
+            const RemoveButton = playerElement.querySelector('.Remove-button');
+            RemoveButton.addEventListener('click', async (event) => {
+            const playerId = event.target.dataset.id
+            await removePlayer(playerId);
+            const players = await fetchAllPlayers();
+            await renderAllPlayers(players);
+            });
+        });
+    } catch (error) {
+        console.error('Uh oh, trouble rendering players!', error);
     }
 };
 
@@ -94,8 +137,7 @@ const renderNewPlayerForm = () => {
 const init = async () => {
     const players = await fetchAllPlayers();
     renderAllPlayers(players);
-
-    renderNewPlayerForm();
+   // renderNewPlayerForm();
 }
 
 init();
