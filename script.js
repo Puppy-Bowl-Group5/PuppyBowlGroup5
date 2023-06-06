@@ -53,17 +53,35 @@ const removePlayer = async (playerId) => {
         );
     }
 };
-//const RenderPlayerById = async (id) => {
-  //  console.log(`render single party: ${id}`);
-   //try {
-     //   const player = await fetchSinglePlayer(id);
-       // console.log('player Details: ', player);
-        //if (!id || id.length === 0) {
-          //  playerContainer.innerHTML = "<h3> No players found!</h3>";
-           // return;
-        //}
-    //}
-//}
+const RenderPlayerById = async (id) => {
+   console.log(`render single party: ${id}`);
+   try {
+        const player = await fetchSinglePlayer(id);
+       console.log('player Details: ', player);
+        if (!id || id.length === 0) {
+            playerContainer.innerHTML = "<h3> No players found!</h3>";
+            return;
+        }
+        const playerDetailsElement = document.createElement('div');
+        playerDetailsElement.classList.add('player-details');
+        playerDetailsElement.innerHTML = `
+        <h2>${player.name}</h2>
+        <p>${player.breed}</p>
+        <p>${player.status}</p>
+        <p>${player.teamId}</p>
+        <img>${player.imageURL}</img>
+        <button class = "close-button">Close</button>
+        `;
+        playerContainer.appendChild(playerDetailsElement);
+
+        const closeButton = playerDetailsElement.querySelector('.close-button');
+        closeButton.addEventListener('click', () => {
+            playerDetailsElement.remove();
+        });
+   }   catch (error) {
+    console.error(error);
+   }
+};
 /**
  * It takes an array of player objects, loops through them, and creates a string of HTML for each
  * player, then adds that string to a larger string of HTML that represents all the players. 
@@ -95,6 +113,7 @@ const renderAllPlayers = async (players) => {
             <p>${player.breed}</p>
             <p>${player.status}</p>
             <p>${player.teamId}</p>
+            <img>${player.imageURL}
             <button class="details-button" data-id="${player.id}">See Details</button>
             <button class="Add-button" data-id="${player.id}">Add Player</button>
             <button class="Remove-button" data-id${player.id}">Remove From Roster</button>
@@ -129,8 +148,8 @@ const renderAllPlayers = async (players) => {
 const renderNewPlayerForm = () => {
     try {
         
-    } catch (err) {
-        console.error('Uh oh, trouble rendering the new player form!', err);
+    } catch (error) {
+        console.error('Uh oh, trouble rendering the new player form!', error);
     }
 }
 
