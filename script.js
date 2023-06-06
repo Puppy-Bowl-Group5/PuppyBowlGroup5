@@ -45,12 +45,16 @@ const addNewPlayer = async (playerObj) => {
 
 const removePlayer = async (playerId) => {
     try {
-
-    } catch (err) {
-        console.error(
-            `Whoops, trouble removing player #${playerId} from the roster!`,
-            err
-        );
+        const response = await fetch(`${APIURL}/${id}`, {
+            method: "DELETE",
+        });
+        if (response.ok) {
+            console.log("player removed")
+        } else {
+            console.error("Player invincible")
+        }
+    } catch (error) {
+        console.error(`Whoops, trouble removing player #${playerId} from the roster!`, error);
     }
 };
 const RenderPlayerById = async (id) => {
