@@ -1,0 +1,92 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-image: url(/image/puppybowl_bg.jpeg);
+    background-size: cover;
+  }
+  
+  h1 {
+    text-transform: uppercase;
+    color: white;
+    font-size: 30px;
+    text-align: center;
+  }
+  
+  #new-player-form {
+    margin-bottom: 20px;
+  }
+  
+  #all-players-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .player {
+    background-color: #ffffffe0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+    width: 300px;
+  }
+  
+  .player h2 {
+    text-transform: uppercase;
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .player p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .player .details-button,
+  .player .Add-button,
+  .player .Remove-button {
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    width: 100%;
+  }
+  
+  .player .details-button {
+    background-color: #00a4ba;
+  }
+  
+  .player .Add-button {
+    background-color: #00ba69;
+  }
+  
+  .player .Remove-button {
+    background-color: #f44336;
+  }
+  
+  .player .details-button:hover,
+  .player .Add-button:hover,
+  .player .Remove-button:hover {
+    background-color: #6e6e6e;
+  }
+  
+  @media (max-width: 768px) {
+    .player,
+    .players-details {
+      width: 100%;
+    }
+  }
