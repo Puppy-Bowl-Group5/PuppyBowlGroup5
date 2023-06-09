@@ -90,3 +90,8 @@
       width: 100%;
     }
   }
+
+  img {
+    max-width: 75px;
+    max-height: 75px;
+  }
