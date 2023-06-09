@@ -73,8 +73,7 @@ const RenderPlayerById = async (id) => {
         <h2>${player.name}</h2>
         <p>${player.breed}</p>
         <p>${player.status}</p>
-        <p>${player.teamId}</p>
-        <img src ="${player.imageURL}"/>
+        <img${player.imageURL} alt="player image"/>
         <button class = "close-button">Close</button>
         `;
         playerContainer.appendChild(playerDetailsElement);
@@ -118,7 +117,7 @@ const renderAllPlayers = async (players) => {
             <p>${player.breed}</p>
             <p>${player.status}</p>
             <p>${player.teamId}</p>
-            <img src = "${player.imageURL}"/>
+            <img${player.imageURL}" alt ="player image"/>
             <button class="details-button" data-id="${player.id}">See Details</button>
             <button class="Add-button" data-id="${player.id}">Add Player</button>
             <button class="Remove-button" data-id="${player.id}">Remove From Roster</button>
