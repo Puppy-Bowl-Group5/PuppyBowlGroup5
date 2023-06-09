@@ -46,7 +46,7 @@ const addNewPlayer = async (playerObj) => {
 
 const removePlayer = async (playerId) => {
     try {
-        const response = await fetch(`${APIURL}/${id}`, {
+        const response = await fetch(`${APIURL}/${playerId}`, {
             method: "DELETE",
         });
         if (response.ok) {
@@ -118,10 +118,10 @@ const renderAllPlayers = async (players) => {
             <p>${player.breed}</p>
             <p>${player.status}</p>
             <p>${player.teamId}</p>
-            <img>${player.imageURL}
+            <img src = "${player.imageURL}"/>
             <button class="details-button" data-id="${player.id}">See Details</button>
             <button class="Add-button" data-id="${player.id}">Add Player</button>
-            <button class="Remove-button" data-id${player.id}">Remove From Roster</button>
+            <button class="Remove-button" data-id="${player.id}">Remove From Roster</button>
             `;
             playerContainer.appendChild(playerElement);
 
