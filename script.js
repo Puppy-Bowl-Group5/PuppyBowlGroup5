@@ -28,8 +28,8 @@ const fetchAllPlayers = async () => {
 const fetchSinglePlayer = async (playerId) => {
     try {
         const response = await fetch(`${APIURL}/${playerId}`);
-        const Data = await response.json();
-        const player = Data.Data.player
+        const data = await response.json();
+        const player = data.data.player
         return player;
     } catch (error) {
         console.error(`Oh no, trouble fetching player #${playerId}!`, error);
@@ -74,7 +74,7 @@ const RenderPlayerById = async (id) => {
         <p>${player.breed}</p>
         <p>${player.status}</p>
         <p>${player.teamId}</p>
-        <img>${player.imageURL}</img>
+        <img src ="${player.imageURL}"/>
         <button class = "close-button">Close</button>
         `;
         playerContainer.appendChild(playerDetailsElement);
