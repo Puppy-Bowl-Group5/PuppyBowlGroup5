@@ -38,10 +38,22 @@ const fetchSinglePlayer = async (playerId) => {
 
 const addNewPlayer = async (playerObj) => {
     try {
-
-    } catch (err) {
-        console.error('Oops, something went wrong with adding that player!', err);
-    }
+        const response = await fetch(
+          'https://fsa-puppy-bowl.herokuapp.com/api/2302-ACC-PT-WEB-PT-D/players',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(playerObj),
+          }
+        );
+        const result = await response.json();
+        console.log(result);
+      } catch (err) {
+        console.error(err);
+      }
+      
 };
 
 const removePlayer = async (playerId) => {
@@ -58,6 +70,15 @@ const removePlayer = async (playerId) => {
         console.error(`Whoops, trouble removing player #${playerId} from the roster!`, error);
     }
 };
+const submitForm = () => {
+
+}
+
+
+
+
+
+
 const RenderPlayerById = async (id) => {
    console.log(`render single party: ${id}`);
    try {
@@ -116,7 +137,7 @@ const renderAllPlayers = async (players) => {
             <h2>${player.name}</h2>
             <p>${player.breed}</p>
             <p>${player.status}</p>
-            <img src=${player.imageUrl}/>
+            <img src=${player.imageUrl}>
             <button class="details-button" data-id="${player.id}">See Details</button>
             <button class="Add-button" data-id="${player.id}">Add Player</button>
             <button class="Remove-button" data-id="${player.id}">Remove From Roster</button>
@@ -160,6 +181,31 @@ const init = async () => {
     const players = await fetchAllPlayers();
     renderAllPlayers(players);
    // renderNewPlayerForm();
+   const submitButton = document.getElementById ("submit")
+   console.log(submitButton)
+   submitButton.addEventListener("click",(event) => {
+   event.preventDefault ()
+    const newPlayerObject = {
+        name: "",
+        status: "",
+        breed: "",
+        imageURL: ""
+    }
+   const inputs = document.getElementsByTagName ("input")
+   const nameInput = document.getElementById ("name")
+   const benchStatus = document.getElementById ("bench")
+   const fieldStatus = document.getElementById ("field")
+   const breed = document.getElementById ("breed")
+   const imageURL = document.getElementById ("imageURL")
+   newPlayerObject.name = nameInput.value
+   newPlayerObject.status = benchStatus.checked === true? "bench": "field"
+   newPlayerObject.breed = breed.value
+   newPlayerObject.imageURL = imageURL.value
+   newPlayerObject.TeamID = 5
+   addNewPlayer (newPlayerObject)
+   renderAllPlayers(players);
+   console.log(benchStatus, fieldStatus, benchStatus.checked)
+   })
 }
 
 init();
